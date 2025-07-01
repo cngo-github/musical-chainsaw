@@ -10,6 +10,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary-100: oklch(94% 0.09 354);
+  --color-primary-DEFAULT: oklch(52.9% 0.75 11);
+
+  --color-black-100: oklch(21.2% 0 297);
+  --color-black-200: oklch(6.3% 0.01 110);
+  --color-black-300: oklch(53.5% 0.04 275);
+  --color-black-DEFAULT: oklch(0% 0 0);
+
+  --color-white-100: oklch(97.2% 0 297);
+  --color-white-DEFAULT: oklch(100% 0 297);
 }
 
 @media (prefers-color-scheme: dark) {
