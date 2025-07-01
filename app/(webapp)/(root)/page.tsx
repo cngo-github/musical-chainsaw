@@ -1,10 +1,5 @@
-import Hello from "@/app/(webapp)/components/Hello/Hello";
+import Image from "next/image";
 
 export default function Home() {
-  return (
-    <>
-      <h1>Hello Next.js Tutorial!</h1>
-      <Hello />
-    </>
-  );
+  return <h1 className="text-2xl">Home</h1>;
 }

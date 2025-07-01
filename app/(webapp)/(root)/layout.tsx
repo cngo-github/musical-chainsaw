@@ -1,14 +1,15 @@
 import { ReactNode } from "react";
+import Navbar from "../components/Navbar/Navbar";
 
-export interface RootProps {
-  children: ReactNode;
+export interface LayoutProps {
+  readonly children: ReactNode;
 }
 
-export default function Root({ children }: RootProps) {
+export default function Layout({ children }: LayoutProps) {
   return (
-    <>
-      <h1>Root Navigation Bar</h1>
+    <main className="font-work-sans">
+      <Navbar />
       {children}
-    </>
+    </main>
   );
 }
