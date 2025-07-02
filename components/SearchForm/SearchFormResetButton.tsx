@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export interface SearchFormResetButtonProps {}
 
@@ -15,10 +16,10 @@ export default function SearchFormResetButton({}: SearchFormResetButtonProps) {
   }
 
   return (
-    <button type="reset" onClick={reset}>
-      <Link href="/" className="search-btn text-white">
+    <Button type="reset" onClick={reset} className="search-btn">
+      <Link href="/" className="text-white">
         <X className="size-5" />
       </Link>
-    </button>
+    </Button>
   );
 }
