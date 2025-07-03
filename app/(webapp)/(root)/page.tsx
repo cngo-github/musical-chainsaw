@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm/SearchForm";
-import StartupCard, { StartupInfo } from "@/components/StartupCard/StartupCard";
+import StartupCard, { CompanyInfo } from "@/components/StartupCard/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUP_QUERIES } from "@/sanity/lib/queries";
 
 export interface HomeProps {
   searchParams: Promise<{ query?: string }>;
@@ -8,19 +10,7 @@ export interface HomeProps {
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const { query } = params;
-  const posts: StartupInfo[] = [
-    {
-      _createdAt: new Date().toISOString(),
-      views: 55,
-      author: { _id: 1, name: "Elon Musk" },
-      id: 1,
-      description: "A description",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk9VkegNiHILqyD398ELCg3F7XKlXRYARF9g&s",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
+  const data = (await client.fetch(STARTUP_QUERIES)) as CompanyInfo[];
 
   return (
     <>
@@ -44,10 +34,8 @@ export default async function Home({ searchParams }: HomeProps) {
         </p>
 
         <ul className="mt-7 card_grid">
-          {posts.length > 0
-            ? posts.map((entry, i) => (
-                <StartupCard info={entry} key={entry.id} />
-              ))
+          {data.length > 0
+            ? data.map((entry) => <StartupCard info={entry} key={entry._id} />)
             : null}
         </ul>
       </section>

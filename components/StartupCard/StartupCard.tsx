@@ -3,29 +3,24 @@ import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { Author, Startup } from "@/sanity/sanity.types";
 
-export interface StartupInfo {
-  _createdAt: string;
-  author: { _id: number; name: string };
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  title: string;
-  views: number;
-}
+export type CompanyInfo = Omit<
+  Startup,
+  "author" | "_type" | "_updatedAt" | "_rev"
+> & { author?: Author };
 
 export interface StartupCardProps {
-  info: StartupInfo;
+  info: CompanyInfo;
 }
 
 export default function StartupCard({ info }: StartupCardProps) {
   const {
     _createdAt: createdAt,
-    author: { _id: authorId, name: authorName },
+    _id: id,
+    author,
     category,
     description,
-    id,
     image,
     title,
     views,
@@ -44,15 +39,15 @@ export default function StartupCard({ info }: StartupCardProps) {
 
       <div className="flex justify-between mt-5 gap-5 items-center">
         <div className="flex-1">
-          <Link href={`/users/${authorId}`}>
-            <p className="text-16-medium line-clamp-1">{authorName}</p>
+          <Link href={`/users/${author?._id}`}>
+            <p className="text-16-medium line-clamp-1">{author?.name}</p>
           </Link>
           <Link href={`/startup/${id}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
 
-        <Link href={`/users/${authorId}`}>
+        <Link href={`/users/${author?._id}`}>
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
             alt="placeholder"
@@ -70,7 +65,7 @@ export default function StartupCard({ info }: StartupCardProps) {
       </Link>
 
       <div className="flex justify-between items-center gap-3 mt-5">
-        <Link href={`/?query=${category.toLowerCase()}`}>
+        <Link href={`/?query=${category?.toLowerCase()}`}>
           <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
