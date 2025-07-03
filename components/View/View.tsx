@@ -22,9 +22,9 @@ export interface ViewProps {
 }
 
 export default async function View({ id }: ViewProps) {
-  const { views: totalViews }: StartupViews = await client
+  const { views: totalViews } = (await client
     .withConfig({ useCdn: false })
-    .fetch(STARTUP_VIEWS_QUERY, { id });
+    .fetch(STARTUP_VIEWS_QUERY, { id })) as StartupViews;
 
   after(
     async () =>
