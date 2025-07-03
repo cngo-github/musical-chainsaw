@@ -12,6 +12,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const { query } = params;
   const { data } = (await sanityFetch({
     query: STARTUP_QUERIES,
+    params: { search: query ?? null },
   })) as unknown as { data: CompanyInfo[] };
 
   return (
