@@ -8,12 +8,15 @@ import { Button } from "../ui/button";
 import { Send } from "lucide-react";
 import { createStartupFormSchema } from "@/lib/validation";
 import { ZodError } from "zod";
+import { createStartup } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 export interface CreateStartupFormProps {}
 
 export default function CreateStartupForm({}: CreateStartupFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState<string | undefined>("");
+  const router = useRouter();
 
   async function handleFormSubmit(previousState: any, formData: FormData) {
     try {
@@ -27,10 +30,27 @@ export default function CreateStartupForm({}: CreateStartupFormProps) {
 
       await createStartupFormSchema.parseAsync(values);
 
-      //const result = await createStartup(previousState, formData, pitch);
+      const { title, description, category, link } = Object.fromEntries(
+        formData.entries().filter(([key]) => key !== "pitch")
+      );
+
+      const result = await createStartup({
+        category,
+        description,
+        link,
+        title,
+        pitch: pitch ?? "",
+      });
+
+      if (result.status === "SUCCESS") {
+        router.push(`/startup/${result._id}`);
+      }
+
+      return result;
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = error.flatten().fieldErrors;
+        console.error(errors, { link: formData.get("link")?.toString() });
 
         setErrors(errors as unknown as Record<string, string>);
 
