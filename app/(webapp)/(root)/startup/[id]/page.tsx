@@ -18,14 +18,16 @@ type StartupData = Omit<Startup, "author"> & { author?: Author };
 
 export default async function StartupDetails({ params }: StartupProps) {
   const { id } = await params;
-  const data: StartupData = await client.fetch(STARTUP_BY_ID_QUERY, { id });
-
-  const md = markdownit();
-  const parsedPitch = md.render(data.pitch ?? "");
+  const data = (await client.fetch(STARTUP_BY_ID_QUERY, { id })) as
+    | StartupData
+    | undefined;
 
   if (!data) {
     return notFound();
   }
+
+  const md = markdownit();
+  const parsedPitch = md.render(data.pitch ?? "");
 
   return (
     <>

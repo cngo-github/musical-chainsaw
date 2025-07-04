@@ -49,7 +49,7 @@ export default function StartupCard({ info }: StartupCardProps) {
 
         <Link href={`/users/${author?._id}`}>
           <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+            src={author?.image ?? ""}
             alt="placeholder"
             width={48}
             height={48}
