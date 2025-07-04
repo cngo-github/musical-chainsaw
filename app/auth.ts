@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         Object.assign(token, {
           id: user?._id,
-          user: { id: user?.id, name: user?.name },
+          user: { id: user?.id, name: user?.name, image: user?.image },
         });
       }
 
@@ -51,7 +51,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       Object.assign(session, {
         id: token.id,
-        user: { id: token?.id, name: (token?.user as any)?.name },
+        user: {
+          id: token?.id,
+          name: (token?.user as any)?.name,
+          image: (token?.user as any)?.image,
+        },
       });
 
       return session;

@@ -124,6 +124,10 @@
     @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
   }
 
+  .card_grid-sm {
+    @apply grid sm:grid-cols-2 gap-5;
+  }
+
   .heading {
     @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
   }
@@ -161,12 +165,20 @@
     @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
   }
 
+  .text-14-normal {
+    @apply font-normal text-sm text-white-100/80;
+  }
+
   .text-16-medium {
     @apply font-medium text-[16px] text-black;
   }
 
   .text-20-medium {
     @apply font-medium text-[20px] text-black;
+  }
+
+  .text-24-black {
+    @apply text-[24px] font-black text-black;
   }
 
   .text-26-semibold {
@@ -179,6 +191,10 @@
 
   .text-30-bold {
     @apply text-[30px] font-bold text-black;
+  }
+
+  .text-30-extrabold {
+    @apply text-[30px] font-extrabold text-white;
   }
 
   /* searchform */
@@ -213,6 +229,10 @@
 
   .startup-card_btn {
     @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3;
+  }
+
+  .startup-card_skeleton {
+    @apply w-full h-96 rounded-[22px] bg-zinc-400;
   }
 
   /* startup details */
@@ -268,6 +288,19 @@
 
   .view_skeleton {
     @apply bg-zinc-400 h-10 w-24 rounded-lg fixed bottom-3 right-3;
+  }
+
+  /* profile */
+  .profile_container {
+    @apply w-full pb-10 pt-20 px-6 max-w-7xl mx-auto lg:flex-row flex-col flex gap-10;
+  }
+
+  .profile_card {
+    @apply w-80 px-6 pb-6 pt-20 flex flex-col justify-center items-center bg-pink-800 border-[5px] border-black shadow-xs rounded-[30px] relative z-0 h-fit max-lg:w-full;
+  }
+
+  .profile_title {
+    @apply w-11/12 bg-white border-[5px] border-black rounded-[20px] px-5 py-3 absolute -top-9 after:absolute after:content-[''] after:-top-1 after:right-0 after:-skew-y-6 after:bg-black after:-z-[1] after:rounded-[20px] after:w-full after:h-[60px] before:absolute before:content-[''] before:-bottom-1 before:left-0  before:-skew-y-6 before:w-full before:h-[60px] before:bg-black  before:-z-[1] before:rounded-[20px] shadow-xs;
   }
 }
 
