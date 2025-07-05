@@ -70,7 +70,8 @@ export default function CreateStartupForm() {
     }
   }
 
-  const [_, formAction, isPending] = useActionState(handleFormSubmit, {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_state, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
     status: "INITIAL",
   });
