@@ -1,6 +1,5 @@
 import { auth } from "@/app/auth";
 import { StartupCardSkeleton } from "@/components/StartupCard/StartupCard";
-import { Skeleton } from "@/components/ui/skeleton";
 import UserStartups from "@/components/UserStartups/UserStartups";
 import { client } from "@/sanity/lib/client";
 import { AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
@@ -41,7 +40,7 @@ export default async function UserProfile({ params }: UserProfileProps) {
 
         <div className="flex flex-1 flex-col gap-5 lg:-mt-5">
           <p className="text-30-bold">
-            {(session as any)?.id === id ? "Your" : "All"} Startups
+            {session?.id === id ? "Your" : "All"} Startups
           </p>
 
           <ul className="card_grid-sm">

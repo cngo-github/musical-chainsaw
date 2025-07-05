@@ -39,7 +39,7 @@ export async function createStartup(form: CreateStartupFormData) {
       },
       author: {
         _type: "reference",
-        _ref: (session as any)?.id,
+        _ref: session?.id,
       },
       pitch,
     };
