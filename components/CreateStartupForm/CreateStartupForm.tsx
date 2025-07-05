@@ -11,14 +11,15 @@ import { ZodError } from "zod";
 import { createStartup } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
-export interface CreateStartupFormProps {}
-
-export default function CreateStartupForm({}: CreateStartupFormProps) {
+export default function CreateStartupForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState<string | undefined>("");
   const router = useRouter();
 
-  async function handleFormSubmit(previousState: any, formData: FormData) {
+  async function handleFormSubmit(
+    previousState: Record<string, unknown>,
+    formData: FormData
+  ) {
     try {
       const values = {
         title: formData.get("title")?.toString() ?? "",
@@ -69,7 +70,7 @@ export default function CreateStartupForm({}: CreateStartupFormProps) {
     }
   }
 
-  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+  const [_, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
     status: "INITIAL",
   });

@@ -4,9 +4,7 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-export interface SearchFormResetButtonProps {}
-
-export default function SearchFormResetButton({}: SearchFormResetButtonProps) {
+export default function SearchFormResetButton() {
   function reset() {
     const form = document.querySelector(".search-form") as HTMLFormElement;
 

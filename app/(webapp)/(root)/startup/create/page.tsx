@@ -2,9 +2,7 @@ import { auth } from "@/app/auth";
 import CreateStartupForm from "@/components/CreateStartupForm/CreateStartupForm";
 import { redirect } from "next/navigation";
 
-export interface CreateStartupProps {}
-
-export default async function CreateStartup({}: CreateStartupProps) {
+export default async function CreateStartup() {
   const session = await auth();
 
   if (!session) {
