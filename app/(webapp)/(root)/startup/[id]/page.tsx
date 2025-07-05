@@ -1,6 +1,9 @@
 import { formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { STARTUP_BY_ID_QUERY } from "@/sanity/lib/queries";
+import {
+  PLAYLIST_BY_SLUG_QUERY,
+  STARTUP_BY_ID_QUERY,
+} from "@/sanity/lib/queries";
 import { Author, Startup } from "@/sanity/sanity.types";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,21 +12,36 @@ import markdownit from "markdown-it";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View/View";
+import StartupCard, { CompanyInfo } from "@/components/StartupCard/StartupCard";
 
 export interface StartupProps {
   params: Promise<{ id: string }>;
 }
 
 type StartupData = Omit<Startup, "author"> & { author?: Author };
+type EditorPick = Omit<StartupData, "_rev" | "_type" | "_updatedAt">;
 
 export default async function StartupDetails({ params }: StartupProps) {
   const { id } = await params;
-  const data = (await client.fetch(STARTUP_BY_ID_QUERY, { id })) as
-    | StartupData
-    | undefined;
+  const [data, maybeEditorPicks] = await Promise.all([
+    (await client.fetch(STARTUP_BY_ID_QUERY, { id })) as
+      | StartupData
+      | undefined,
+    await client.fetch(PLAYLIST_BY_SLUG_QUERY, {
+      slug: "editor-picks",
+    }),
+  ]);
+  let editorPicks: EditorPick[] = [];
 
   if (!data) {
     return notFound();
+  }
+
+  if (
+    maybeEditorPicks?.select !== null &&
+    maybeEditorPicks?.select !== undefined
+  ) {
+    editorPicks = maybeEditorPicks.select as unknown as EditorPick[];
   }
 
   const md = markdownit();
@@ -80,6 +98,21 @@ export default async function StartupDetails({ params }: StartupProps) {
         </div>
 
         <hr className="divider" />
+
+        {editorPicks.length > 0 && (
+          <div className="max-w-4xl mx-auto">
+            <p className="text-30-semibold">Editor Picks</p>
+
+            <ul className="mt-7 card_grid-sm">
+              {editorPicks.map((entry) => (
+                <StartupCard
+                  key={entry._id}
+                  info={entry as unknown as CompanyInfo}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
 
         <Suspense fallback={<Skeleton className="view_skeleton" />}>
           <View id={id} />
